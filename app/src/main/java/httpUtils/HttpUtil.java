@@ -64,6 +64,8 @@ public class HttpUtil {
             JSONObject json = new JSONObject(result);
             String taici = json.getString("taici");
             String source = json.getString("source");
+            Log.d("msg",taici);
+            Log.d("msg",source);
             saveDate(taici,source);
         } catch (JSONException e) {
             e.printStackTrace();

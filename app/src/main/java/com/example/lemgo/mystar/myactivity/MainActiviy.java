@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.lemgo.mystar.R;
 import httpUtils.HttpUtil;
+import httpUtils.MyApplication;
 
 /**
  * Created by Administrator on 2016/12/5 0005.
@@ -30,7 +31,7 @@ public class MainActiviy extends Activity{
             @Override
             public void onClick(View view) {
                 HttpUtil.sendHttpResquset(HTTP_URL);
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActiviy.this);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
                 String taici = preferences.getString("taici","");
                 String source = preferences.getString("source","");
                 String showText = taici+"/n"+source;
