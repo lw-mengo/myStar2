@@ -35,7 +35,7 @@ public class MainActiviy extends Activity{
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
                 String taici = preferences.getString("taici","");
                 String source = preferences.getString("source","");
-                String showText = "      "+taici+"\n"+"                                                 \t----------------"+source;
+                String showText = "         "+taici+"\n"+"                                                 \t----------------"+source;
                 textView.setText(showText);
             }
         });
