@@ -1,7 +1,11 @@
 package httpUtils;
 
 
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,14 +18,16 @@ import java.net.URL;
  */
 
 public class HttpUtil {
-    public static String sendHttpResquset(String httpUrl){
-                HttpURLConnection connection = null;
-                String result = null;
-                StringBuilder response = new StringBuilder();
+    public static void sendHttpResquset(final String httpUrl) {
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
+                String result =null;
+                StringBuilder response = new StringBuilder();
                 try {
                     URL url = new URL(httpUrl);
-                    Log.d("msg1",url.toString());
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setRequestProperty("apikey", "fec11918da9ce96f5d51ac4e1feac1c7");
@@ -29,25 +35,38 @@ public class HttpUtil {
                     connection.setReadTimeout(8000);
                     connection.connect();
                     InputStream inputStream = connection.getInputStream();
-                    Log.d("msg4", inputStream.toString());
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "gbk"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
                     String strRead = null;
-                    Log.d("msg4", reader.readLine());
                     while ((strRead = reader.readLine()) != null) {
                         response.append(strRead);
                         response.append("\r\n");
-                        Log.d("msg2", response.toString());
                     }
                     reader.close();
                     result = response.toString();
-                    Log.d("msg3", result);
-                }catch (Exception e){
+                    parseJsonData(result);
+                } catch (Exception e) {
                     e.printStackTrace();
-                    } finally {
-                    if(connection!=null){
+                } finally {
+                    if (connection != null) {
                         connection.disconnect();
                     }
                 }
-        return result ;
+            }
+        }).start();
+
+    }
+
+    private  static void  parseJsonData(String result) {
+        try{
+            JSONObject jsonObject = new JSONObject(result);
+            String taici = jsonObject.getString("taici");
+            String source = jsonObject.getString("source");
+            Log.d("msg",taici);
+            Log.d("msg",source);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
