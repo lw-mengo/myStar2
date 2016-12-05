@@ -2,6 +2,7 @@ package httpUtils;
 
 
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -12,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Administrator on 2016/12/5 0005.
@@ -63,10 +66,19 @@ public class HttpUtil {
             String source = jsonObject.getString("source");
             Log.d("msg",taici);
             Log.d("msg",source);
+           saveInfo(taici,source);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    private static void saveInfo(String taici, String source) {
+        SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        edit.putString("taici",taici);
+        edit.putString("source",source);
+        edit.commit();
 
     }
 }
