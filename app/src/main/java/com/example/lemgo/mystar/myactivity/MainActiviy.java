@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.lemgo.mystar.R;
 import httpUtils.HttpUtil;
 import httpUtils.MyApplication;
@@ -19,7 +17,8 @@ import httpUtils.MyApplication;
 
 public class MainActiviy extends Activity{
     private static final String HTTP_URL ="http://apis.baidu.com/acman/zhaiyanapi/tcrand?fangfa=json";
-
+    private static final  String KEY = "35f5b278c09b8254744b83c1039b2f4c";
+    private static final String URL_STAR="http://web.juhe.cn:8080/constellation/getAll?consName=" ;
     private Button btn ;
     private TextView textView;
     @Override
