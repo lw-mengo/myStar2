@@ -8,11 +8,10 @@ import android.content.Context;
  */
 
 public class MyApplication extends Application {
-    private static Context context;
-
+    private  static Context context;
     @Override
     public void onCreate() {
-        context = getApplicationContext();
+       context = getApplicationContext();
     }
 
     public static Context getContext() {

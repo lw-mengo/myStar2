@@ -14,21 +14,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by Administrator on 2016/12/5 0005.
  */
 
 public class HttpUtil {
-    public static void sendHttpResquset(final String httpUrl) {
+    public static void  sendHttpResquset(final String httpUrl) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection connection = null;
-                String result =null;
+                String result = null;
                 StringBuilder response = new StringBuilder();
+
                 try {
                     URL url = new URL(httpUrl);
                     connection = (HttpURLConnection) url.openConnection();
@@ -38,7 +37,7 @@ public class HttpUtil {
                     connection.setReadTimeout(8000);
                     connection.connect();
                     InputStream inputStream = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "gbk"));
                     String strRead = null;
                     while ((strRead = reader.readLine()) != null) {
                         response.append(strRead);
@@ -46,7 +45,7 @@ public class HttpUtil {
                     }
                     reader.close();
                     result = response.toString();
-                    parseJsonData(result);
+                    parseJsonDate(result);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -54,31 +53,28 @@ public class HttpUtil {
                         connection.disconnect();
                     }
                 }
+
             }
         }).start();
 
     }
 
-    private  static void  parseJsonData(String result) {
-        try{
-            JSONObject jsonObject = new JSONObject(result);
-            String taici = jsonObject.getString("taici");
-            String source = jsonObject.getString("source");
-            Log.d("msg",taici);
-            Log.d("msg",source);
-           saveInfo(taici,source);
+    private static void parseJsonDate(String result) {
+        try {
+            JSONObject json = new JSONObject(result);
+            String taici = json.getString("taici");
+            String source = json.getString("source");
+
+            saveDate(taici,source);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    private static void saveInfo(String taici, String source) {
-        SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
-        edit.putString("taici",taici);
-        edit.putString("source",source);
-        edit.commit();
-
+    private static void saveDate(String taici, String source) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        editor.putString("taici",taici);
+        editor.putString("source",source);
+        editor.commit();
     }
 }

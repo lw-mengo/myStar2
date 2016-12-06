@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import httpUtils.MyApplication;
 public class MainActiviy extends Activity{
     private static final String HTTP_URL ="http://apis.baidu.com/acman/zhaiyanapi/tcrand?fangfa=json";
 
-    private Button btn;
+    private Button btn ;
     private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,13 @@ public class MainActiviy extends Activity{
             @Override
             public void onClick(View view) {
                 HttpUtil.sendHttpResquset(HTTP_URL);
-                SharedPreferences pres = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
-                String taici = pres.getString("taici","");
-                String source = pres.getString("source","");
-                String text=taici+"/n"+source;
-                textView.setText(text);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+                String taici = preferences.getString("taici","");
+                String source = preferences.getString("source","");
+                String showText = "         "+taici+"\n"+"                                                 \t----------------"+source;
+                textView.setText(showText);
             }
         });
-
 
 
     }
