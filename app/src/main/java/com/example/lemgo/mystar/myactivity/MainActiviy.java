@@ -53,12 +53,12 @@ public class MainActiviy extends Activity{
         starView = (TextView) findViewById(R.id.starView);
         star = (Button) findViewById(R.id.star);
         editText = (EditText) findViewById(R.id.editText);
-        String starName = editText.getText().toString();
-        httpUrl  = URL_STAR +starName+"&type=today&key="+KEY;
-        Log.d("msg2",httpUrl);
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String starName = editText.getText().toString();
+                httpUrl  = URL_STAR +starName+"&type=today&key="+KEY;
+                Log.d("msg2",httpUrl);
                 StarHttp.getStarHttp(httpUrl, new HttpCallBackListener() {
                     @Override
                     public void onFinish(String response) {

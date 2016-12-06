@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.lemgo.mystar.myactivity.MainActiviy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,13 +18,18 @@ import org.json.JSONObject;
 public class DateUtils {
     public static void  handleDataInfo(Context context,String  response){
         try{
-            JSONObject jsonObject = new JSONObject(response);
-            String dateTime = jsonObject.getString("datetime");
-            Log.d("msg",dateTime);
-            String all  = jsonObject.getString("all");
-            String color = jsonObject.getString("color");
-            String summary = jsonObject.getString("summary");
-            saveDateInfo(context,dateTime,all,color,summary);
+            Log.d("msg6",response);
+            JSONObject jsonObject =new JSONObject(response);
+            if(jsonObject.getInt("error_code")==205801){
+              Log.d("msg","chucuole");
+            }else {
+                String dateTime = jsonObject.getString("datetime");
+                Log.d("msg", dateTime);
+                String all = jsonObject.getString("all");
+                String color = jsonObject.getString("color");
+                String summary = jsonObject.getString("summary");
+                saveDateInfo(context, dateTime, all, color, summary);
+            }
 
         }catch (JSONException e){
             e.printStackTrace();

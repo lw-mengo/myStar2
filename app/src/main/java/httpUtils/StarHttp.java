@@ -1,5 +1,7 @@
 package httpUtils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,6 +23,7 @@ public class StarHttp {
                 HttpURLConnection connection  = null;
                 try {
                     URL url = new URL(address);
+                    Log.d("msg5",address);
                     connection  = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setReadTimeout(8000);
