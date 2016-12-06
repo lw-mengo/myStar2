@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.lemgo.mystar.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import httpUtils.DateUtils;
 import httpUtils.HttpCallBackListener;
 import httpUtils.HttpUtil;
@@ -56,8 +59,14 @@ public class MainActiviy extends Activity{
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String starName = editText.getText().toString();
-                httpUrl  = URL_STAR +starName+"&type=today&key="+KEY;
+                String starName = null;
+                try {
+                    starName = URLEncoder.encode(editText.getText().toString(),"utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                httpUrl = URL_STAR +starName+"&type=today&key="+KEY;
                 Log.d("msg2",httpUrl);
                 StarHttp.getStarHttp(httpUrl, new HttpCallBackListener() {
                     @Override
