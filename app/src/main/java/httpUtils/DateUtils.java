@@ -3,6 +3,7 @@ package httpUtils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ public class DateUtils {
         try{
             JSONObject jsonObject = new JSONObject(response);
             String dateTime = jsonObject.getString("datetime");
+            Log.d("msg",dateTime);
             String all  = jsonObject.getString("all");
             String color = jsonObject.getString("color");
             String summary = jsonObject.getString("summary");
@@ -33,6 +35,7 @@ public class DateUtils {
         editor.putString("all",all);
         editor.putString("color",color);
         editor.putString("summary",summary);
+        Log.d("msg1",dateTime);
         editor.commit();
     }
 }

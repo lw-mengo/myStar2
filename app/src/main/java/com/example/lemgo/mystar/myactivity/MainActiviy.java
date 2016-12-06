@@ -3,7 +3,9 @@ package com.example.lemgo.mystar.myactivity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +55,7 @@ public class MainActiviy extends Activity{
         editText = (EditText) findViewById(R.id.editText);
         String starName = editText.getText().toString();
         httpUrl  = URL_STAR +starName+"&type=today&key="+KEY;
+        Log.d("msg2",httpUrl);
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,12 +63,22 @@ public class MainActiviy extends Activity{
                     @Override
                     public void onFinish(String response) {
                         DateUtils.handleDataInfo(MainActiviy.this,response);
-                        showInfo();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showInfo();
+                            }
+                        });
                     }
-
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(MyApplication.getContext(),"shibai",Toast.LENGTH_SHORT).show();
+                        Log.d("Error:",e.toString());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActiviy.this,"shibai",Toast.LENGTH_SHORT);
+                            }
+                        });
                     }
                 });
             }
@@ -80,6 +93,6 @@ public class MainActiviy extends Activity{
         String summary = preferences.getString("summary","");
         String starText = "时间："+dateTime+"\n"+"综合指数:"+all+"\n"
         +"幸运颜色:"+color+"\n"+"今日概述:"+summary+"";
-        editText.setText(starText);
+        starView.setText(starText);
     }
 }
